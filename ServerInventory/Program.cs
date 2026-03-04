@@ -50,7 +50,17 @@
                 }
                 else if (choice == "2")
                 {
-                    Console.WriteLine("Show Servers selected");
+                    Console.WriteLine("Saved Servers:");
+
+                    foreach (Server server in servers)
+                    {
+                        Console.WriteLine("Name: " + server.Name);
+                        Console.WriteLine("IP: " + server.IPAddress);
+                        Console.WriteLine("OS: " + server.OperatingSystem);
+                        Console.WriteLine("Location: " + server.Location);
+                        Console.WriteLine("Status: " + server.Status);
+                        Console.WriteLine("----------------------");
+                    }
                 }
                 else if (choice == "3")
                 {
