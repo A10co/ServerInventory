@@ -9,9 +9,28 @@
             Console.WriteLine("Server Inventory gestartet!");
 
             List<Server> servers = new List<Server>();
-
-            while (true)
+            if (File.Exists("servers.txt"))
             {
+                string[] lines = File.ReadAllLines("servers.txt");
+
+                foreach (string line in lines)
+                {
+                    string[] parts = line.Split(',');
+
+                    Server server = new Server();
+
+                    server.Name = parts[0];
+                    server.IPAddress = parts[1];
+                    server.OperatingSystem = parts[2];
+                    server.Location = parts[3];
+                    server.Status = parts[4];
+
+                    servers.Add(server);
+                }
+            }
+                   
+                while (true) { 
+             
 
                 Console.WriteLine("1 - Add Server");
                 Console.WriteLine("2 - Show Servers");
