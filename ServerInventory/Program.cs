@@ -123,6 +123,20 @@
                             if (index >= 0 && index < servers.Count)
                             {
                                 servers.RemoveAt(index);
+
+                                File.WriteAllText("servers.txt", "");
+
+                                foreach (Server s in servers)
+                                {
+                                    string line = s.Name + "," +
+                                                  s.IPAddress + "," +
+                                                  s.OperatingSystem + "," +
+                                                  s.Location + "," +
+                                                  s.Status;
+
+                                    File.AppendAllText("servers.txt", line + Environment.NewLine);
+                                }
+
                                 Console.WriteLine("Server deleted successfully.");
                             }
                             else
@@ -133,7 +147,6 @@
                         else
                         {
                             Console.WriteLine("Please enter a valid number.");
-                            Console.WriteLine();
                         }
                     }
                 }
