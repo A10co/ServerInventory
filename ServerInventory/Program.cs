@@ -46,21 +46,39 @@
 
                     servers.Add(newServer);
 
+                    string line = newServer.Name + "," +
+                                  newServer.IPAddress + "," +
+                                  newServer.OperatingSystem + "," +
+                                  newServer.Location + "," +
+                                  newServer.Status;
+
+                    File.AppendAllText("servers.txt", line + Environment.NewLine);
+
                     Console.WriteLine("Server added successfully!");
+                    Console.WriteLine();
                 }
                 else if (choice == "2")
                 {
-                    Console.WriteLine("Saved Servers:");
-
-                    foreach (Server server in servers)
+                    if (servers.Count == 0)
                     {
-                        Console.WriteLine("Name: " + server.Name);
-                        Console.WriteLine("IP: " + server.IPAddress);
-                        Console.WriteLine("OS: " + server.OperatingSystem);
-                        Console.WriteLine("Location: " + server.Location);
-                        Console.WriteLine("Status: " + server.Status);
-                        Console.WriteLine("----------------------");
+                        Console.WriteLine("No servers available.");
                     }
+                    else
+                    {
+                        Console.WriteLine("Saved Servers:");
+
+                        foreach (Server server in servers)
+                        {
+                            Console.WriteLine("Name: " + server.Name);
+                            Console.WriteLine("IP: " + server.IPAddress);
+                            Console.WriteLine("OS: " + server.OperatingSystem);
+                            Console.WriteLine("Location: " + server.Location);
+                            Console.WriteLine("Status: " + server.Status);
+                            Console.WriteLine("----------------------");
+                        }
+                    }
+
+                    Console.WriteLine();
                 }
                 else if (choice == "3")
                 {
@@ -96,6 +114,7 @@
                         else
                         {
                             Console.WriteLine("Please enter a valid number.");
+                            Console.WriteLine();
                         }
                     }
                 }
@@ -104,7 +123,10 @@
                     Console.WriteLine("Exit selected");
                     break;
                 }
-                else { Console.WriteLine("ungültige Eingabe"); }
+                else { Console.WriteLine("ungültige Eingabe");
+
+                    Console.WriteLine();
+                }
 
 
 
