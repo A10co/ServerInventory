@@ -64,13 +64,47 @@
                 }
                 else if (choice == "3")
                 {
-                    Console.WriteLine("Delete Server selected");
+                    if (servers.Count == 0)
+                    {
+                        Console.WriteLine("No servers to delete.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Select server to delete:");
+
+                        for (int i = 0; i < servers.Count; i++)
+                        {
+                            Console.WriteLine((i + 1) + " - " + servers[i].Name);
+                        }
+
+                        Console.Write("Enter server number: ");
+
+                        if (int.TryParse(Console.ReadLine(), out int index))
+                        {
+                            index = index - 1;
+
+                            if (index >= 0 && index < servers.Count)
+                            {
+                                servers.RemoveAt(index);
+                                Console.WriteLine("Server deleted successfully.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid server number.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please enter a valid number.");
+                        }
+                    }
                 }
                 else if (choice == "4")
                 {
-                   Console.WriteLine("Exit selected");
-                 break;
+                    Console.WriteLine("Exit selected");
+                    break;
                 }
+                else { Console.WriteLine("ungültige Eingabe"); }
 
 
 
