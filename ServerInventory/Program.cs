@@ -1,10 +1,11 @@
-﻿namespace ServerInventory
+﻿
+namespace ServerInventory
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-           
+
 
             Console.WriteLine("Server Inventory gestartet!");
 
@@ -28,142 +29,172 @@
                     servers.Add(server);
                 }
             }
-                   
-                while (true) { 
-             
 
-                Console.WriteLine("1 - Add Server");
-                Console.WriteLine("2 - Show Servers");
-                Console.WriteLine("3 - Delete Server");
-                Console.WriteLine("4 - Exit");
+            while (true)
+            {
 
-                string choice = Console.ReadLine();
+
+                ShowMenu();
+
+                string choice = Console.ReadLine()!;
                 if (choice == "1")
                 {
-                    Console.Write("Server Name: ");
-                    string name = Console.ReadLine();
-
-                    Console.Write("IP Address: ");
-                    string ip = Console.ReadLine();
-
-                    Console.Write("Operating System: ");
-                    string os = Console.ReadLine();
-
-                    Console.Write("Location: ");
-                    string location = Console.ReadLine();
-
-                    Console.Write("Status: ");
-                    string status = Console.ReadLine();
-
-                    Server newServer = new Server();
-
-                    newServer.Name = name;
-                    newServer.IPAddress = ip;
-                    newServer.OperatingSystem = os;
-                    newServer.Location = location;
-                    newServer.Status = status;
-
-                    servers.Add(newServer);
-
-                    string line = newServer.Name + "," +
-                                  newServer.IPAddress + "," +
-                                  newServer.OperatingSystem + "," +
-                                  newServer.Location + "," +
-                                  newServer.Status;
-
-                    File.AppendAllText("servers.txt", line + Environment.NewLine);
-
-                    Console.WriteLine("Server added successfully!");
-                    Console.WriteLine();
+                    AddServer(servers);
                 }
                 else if (choice == "2")
                 {
-                    if (servers.Count == 0)
-                    {
-                        Console.WriteLine("No servers available.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Saved Servers:");
-
-                        foreach (Server server in servers)
-                        {
-                            Console.WriteLine("Name: " + server.Name);
-                            Console.WriteLine("IP: " + server.IPAddress);
-                            Console.WriteLine("OS: " + server.OperatingSystem);
-                            Console.WriteLine("Location: " + server.Location);
-                            Console.WriteLine("Status: " + server.Status);
-                            Console.WriteLine("----------------------");
-                        }
-                    }
-
-                    Console.WriteLine();
+                    ShowServers(servers);
                 }
                 else if (choice == "3")
                 {
-                    if (servers.Count == 0)
-                    {
-                        Console.WriteLine("No servers to delete.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Select server to delete:");
+                    DeleteServer(servers);
 
-                        for (int i = 0; i < servers.Count; i++)
-                        {
-                            Console.WriteLine((i + 1) + " - " + servers[i].Name);
-                        }
-
-                        Console.Write("Enter server number: ");
-
-                        if (int.TryParse(Console.ReadLine(), out int index))
-                        {
-                            index = index - 1;
-
-                            if (index >= 0 && index < servers.Count)
-                            {
-                                servers.RemoveAt(index);
-
-                                File.WriteAllText("servers.txt", "");
-
-                                foreach (Server s in servers)
-                                {
-                                    string line = s.Name + "," +
-                                                  s.IPAddress + "," +
-                                                  s.OperatingSystem + "," +
-                                                  s.Location + "," +
-                                                  s.Status;
-
-                                    File.AppendAllText("servers.txt", line + Environment.NewLine);
-                                }
-
-                                Console.WriteLine("Server deleted successfully.");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Invalid server number.");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Please enter a valid number.");
-                        }
-                    }
                 }
                 else if (choice == "4")
                 {
                     Console.WriteLine("Exit selected");
                     break;
                 }
-                else { Console.WriteLine("ungültige Eingabe");
+                else
+                {
+                    Console.WriteLine("ungültige Eingabe");
 
                     Console.WriteLine();
                 }
 
 
 
-            }
+                }
 
+            }
+        
+        static void ShowMenu()
+        {
+            Console.WriteLine("----------------------");
+            Console.WriteLine("1 - Add Server");
+            Console.WriteLine("2 - Show Servers");
+            Console.WriteLine("3 - Delete Server");
+            Console.WriteLine("4 - Exit");
+        }
+        static void AddServer(List<Server> servers)
+        {
+            Console.Write("Server Name: ");
+            string name = Console.ReadLine()!;
+
+            Console.Write("IP Address: ");
+            string ip = Console.ReadLine()!;
+
+            Console.Write("Operating System: ");
+            string os = Console.ReadLine()!;
+
+            Console.Write("Location: ");
+            string location = Console.ReadLine()!;
+
+            Console.Write("Status: ");
+            string status = Console.ReadLine()!;
+
+            Server newServer = new Server();
+
+            newServer.Name = name;
+            newServer.IPAddress = ip;
+            newServer.OperatingSystem = os;
+            newServer.Location = location;
+            newServer.Status = status;
+
+            servers.Add(newServer);
+
+            string line = newServer.Name + "," +
+                          newServer.IPAddress + "," +
+                          newServer.OperatingSystem + "," +
+                          newServer.Location + "," +
+                          newServer.Status;
+
+            File.AppendAllText("servers.txt", line + Environment.NewLine);
+
+            Console.WriteLine("Server added successfully!");
+            Console.WriteLine();
+        }
+        static void ShowServers(List<Server> servers)
+        {
+            if (servers.Count == 0)
+            {
+                Console.WriteLine("No servers available.");
+            }
+            else
+            {
+                Console.WriteLine("Saved Servers:");
+
+                foreach (Server server in servers)
+                {
+                    Console.WriteLine("Name: " + server.Name);
+                    Console.WriteLine("IP: " + server.IPAddress);
+                    Console.WriteLine("OS: " + server.OperatingSystem);
+                    Console.WriteLine("Location: " + server.Location);
+                    Console.WriteLine("Status: " + server.Status);
+                    Console.WriteLine("----------------------");
+                }
+            }
+        }
+        static void DeleteServer(List<Server> servers)
+        {
+            if (servers.Count == 0)
+            {
+                Console.WriteLine("No servers to delete.");
+            }
+            else
+            {
+                Console.WriteLine("Select server to delete:");
+
+                for (int i = 0; i < servers.Count; i++)
+                {
+                    Console.WriteLine((i + 1) + " - " + servers[i].Name);
+                }
+
+                Console.Write("Enter server number: ");
+
+                if (int.TryParse(Console.ReadLine(), out int index))
+                {
+                    index = index - 1;
+
+                    if (index >= 0 && index < servers.Count)
+                    {
+                        servers.RemoveAt(index);
+
+                        File.WriteAllText("servers.txt", "");
+
+                        foreach (Server s in servers)
+                        {
+                            string line = s.Name + "," +
+                                          s.IPAddress + "," +
+                                          s.OperatingSystem + "," +
+                                          s.Location + "," +
+                                          s.Status;
+
+                            File.AppendAllText("servers.txt", line + Environment.NewLine);
+                        }
+
+                        Console.WriteLine("Server deleted successfully.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid server number.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid number.");
+                }
+            }
         }
     }
+
 }
+
+
+
+
+
+
+
+
+             
